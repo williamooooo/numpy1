@@ -2,17 +2,21 @@
 
 11111111111111111111111111111111111111111111111111111111
 
+#A
 a = np.arange(1,6,1)
 #print(a)
+
 
 #B
 b = np.arange(1, np.pi*2, 0.1)
 #print(b) #arange tar vektorns första och sista värde, samt storlek av varje steg.
 
+
 #C
 c = np.array([1,2,3,4,5,6]).reshape(3,2)
 #reshape ändrar vektorns från 1x6 till 3x2
 #print(c)
+
 
 #D
 dlist = a.tolist()
@@ -30,9 +34,47 @@ newelist = elist + elist2
 e = np.array(newelist).reshape(2,5)
 #print(e) # skapa en list2 som skapar nya vektorn. sedan samma som i d.
 
+
+#F
 f = np.sin(b)
 #print(f)
 # jo
 
 
 2222222222222222222222222222222222222222222222222222222
+
+
+#a
+def function_a(x):
+    return x**2
+a = function_a(2)
+#print(a)
+
+#b1
+
+def function_b1(x):
+    return x ** 2
+vektor = np.array([1,2,3])
+b1 = function_b1(vektor)
+#print (b1)
+
+#b2
+def function_b2(x):
+    return np.dot(x, x)
+b2 = function_b2(vektor)
+#print(b2)
+
+#c1
+def function_c1(x):
+    return x * x
+matris = np.array([[1,2,3], [4,5,6], [7,8,9]])
+c1 = function_c1(matris)
+#print (c1)
+
+#c2
+def function_c2(x):
+    return np.dot(x, x)
+c2 = function_c2(matris)
+print(c2)
+
+333333333333333333333333333333
