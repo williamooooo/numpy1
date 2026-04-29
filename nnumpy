@@ -78,3 +78,27 @@ c2 = function_c2(matris)
 print(c2)
 
 333333333333333333333333333333
+
+#3 
+
+fig, ax = plt.subplots() #skapar en figur med axlar
+
+x = np.linspace(-10, 10, 100)
+
+y = 1 + x + 4 / ( x - 2) **2
+y_asymptot = x + 1
+#funktionen, samt sneda asymptoten
+
+plt.axvline(x = 2, color = 'red') #asymptot 2 
+
+plt.plot(x,y_asymptot)
+plt.plot(x,y)
+
+
+ax.set_xlim(-10, 10)
+ax.set_ylim(-10, 10)
+#sätter gränser
+plt.show()
+
+4444444444444444444444444444444444
+
