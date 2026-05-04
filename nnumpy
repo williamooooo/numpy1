@@ -143,6 +143,44 @@ plt.show()
 55555555555555555555555555555555555555
 
 
+def f_A(x):
+    return x / ((x ** 2 + 4) ** (1 / 3))
+
+def f_B(x):
+    return np.log(x) * x**0.5
+
+#Integrationsgränser samt facit A
+a_A = 0
+b_A = 2
+exakt_A = (3 / 4) * (4 - 4 ** (2 / 3))
+
+#Integrationsgränser samt facit B
+a_B = 1
+b_B = 4
+exakt_B = (16 / 3) * np.log(4) - (28 / 9)
+
+#Möjliga dx värden
+dx_values = [0.5, 0.1, 0.01, 0.001]
+
+
+print("A:")
+for dx in dx_values:
+    x_vals = np.arange(a_A, b_A, dx)
+    y_vals = f_A(x_vals)
+    numerisk_A = np.sum(y_vals * dx)
+    fel_A = abs(exakt_A - numerisk_A)
+
+    print(f"Steg: {dx}, Numerisk {numerisk_A}, Fel {fel_A}")
+print("\n")
+
+print("B:")
+for dx in dx_values:
+    x_vals = np.arange(a_B, b_B, dx)
+    y_vals = f_B(x_vals)
+    numerisk_B = np.sum(y_vals * dx)
+    fel_B = abs(exakt_B - numerisk_B)
+    print(f"Steg: {dx}, Numerisk {numerisk_B}, Fel {fel_B}")
+
 
 
 
