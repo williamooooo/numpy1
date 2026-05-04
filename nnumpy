@@ -181,6 +181,30 @@ for dx in dx_values:
     fel_B = abs(exakt_B - numerisk_B)
     print(f"Steg: {dx}, Numerisk {numerisk_B}, Fel {fel_B}")
 
+6666666666666666666666666666666
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+import math as m
+
+#tidsaxel från 0 - 10
+t = np.linspace(0,10,500)
+A_values = range(-4,5)
+B_values = range(-4,5)
+
+plt.figure(figsize = (10,6))
+
+for A in A_values:
+    for B in B_values:
+        q = np.exp(-t) * (A * np.cos(t) + B * np.sin(t)) + np.cos(t) + 2 * np.sin(t)
+        plt.plot(t,q)
+
+q_steady = np.cos(t) + 2 * np.sin(t)
+plt.plot (t, q_steady)
+plt.grid(True)
+plt.show()
+
 
 
 
