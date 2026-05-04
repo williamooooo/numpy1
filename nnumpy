@@ -102,3 +102,44 @@ plt.show()
 
 4444444444444444444444444444444444
 
+
+#f(x)
+def f(x):
+    return 1 + np.sin(x) + 0.5 * np.cos(4*x)
+
+#f'(x)
+def f_analytical(x):
+    return np.cos(x) - 2 * np.sin(4*x)
+
+#f' numerisk
+def f_numerical(f, x, h):
+    return (f(x + h) - f(x)) / h
+
+#skapa array
+x = np.linspace(0, 2 * np.pi, 200)
+
+y = f_analytical(x)
+
+#värden h i steglängder för nunerisk f'(x)
+h_values = [0.5, 0.1, 0.01]
+
+#plottar analytiska derivatan 
+plt.figure(figsize = (12,6))
+plt.plot(x, y, label = "analytiska", color = "blue")
+
+#plottar numeriska derivatan med olika steglängder h
+for h in h_values:
+    y_numerical = f_numerical(f, x, h)
+    plt.plot(x, y_numerical, label = "numeriska", color = "red")
+
+plt.title("analytisk mot numerisk derivata ")
+plt.xlabel("x")
+plt.ylabel("f'(x)")
+plt.legend()
+
+
+plt.show()
+
+
+
+
