@@ -252,7 +252,28 @@ z3 = np.cos(P3)
 ax3.plot_surface(x3, y3, z3, color='white')
 ax3.set_title("Halvsfär")
 
+
+#d
+ax4 = fig.add_subplot(224, projection='3d')
+t = np.linspace(0, 5 * np.pi, 500)
+# första spiral
+x4_1 = np.cos(t)
+y4_1 = np.sin(t)
+z4_1 = t
+ax4.plot(x4_1, y4_1, z4_1, color='blue', label='Spiral 1', linewidth=2)
+# spiral 2, förskjutet med pi
+x4_2 = np.cos(t + np.pi)
+y4_2 = np.sin(t + np.pi)
+z4_2 = t
+ax4.plot(x4_2, y4_2, z4_2, color='red', label='Spiral 2', linewidth=2)
+
+
+ax4.set_title("Spiraler")
+ax4.legend()
+
 plt.show()
+
+
 
 #1010101010101010101010
 #a
