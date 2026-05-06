@@ -276,7 +276,9 @@ plt.show()
 
 
 #1010101010101010101010
+
 #a
+
 a = np.array([[4, -1, -9, -4, -6],
               [1,  1, -1,  4, -5],
               [0, -3,  4,  7,  0],
@@ -290,8 +292,48 @@ print(x)
 np.allclose(np.dot(a, x), b)
 
 #b 
+
 prices = []
-distances []
+distances = []
+
+with open('Shinkansen.text', 'r') as file:
+    for line in file:
+        if line.startswith('#') or not line.strip():
+            #tar bort kommentarer, separerar filen till distances och prices
+            continue
+
+        parts = line.split()
+
+        price = float(parts[-2])
+        distance = float(parts[-1])
+
+        prices.append(price)
+        distances.append(distance)
+
+#omvandlar till arrays
+prices = np.array(prices)
+distances = np.array(distances)
+
+#för y = ax + b, skapar matriser för mkm, räknar ut grundavgift och kilometerpris
+A_lstsq = np.vstack([np.ones(len(distances)), distances]).T
+coeffs, _, _, _ = np.linalg.lstsq(A_lstsq, prices, None)
+a, b = coeffs
+
+print(f"Grundavgift (a): {a} JPY")
+print(f"Pris per km (b): {b} JPY")
+
+#Sendai
+price_sendai = a + b * 325.4
+print(f"Sendaibiljett i jpy: {price_sendai} jpy")
+
+#Stockholm-gbg
+price_sthlm_gbg_jpy = a + b * 455
+exchange_rate = 0.059  #växelkurs 040526
+price_sthlm_gbg_sek = price_sthlm_gbg_jpy * exchange_rate
+
+print(f"Sthlm-Gbg biljett i sek: {price_sthlm_gbg_sek} sek")
+
+
 
 
 
