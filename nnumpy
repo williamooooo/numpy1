@@ -334,7 +334,95 @@ price_sthlm_gbg_sek = price_sthlm_gbg_jpy * exchange_rate
 print(f"Sthlm-Gbg biljett i sek: {price_sthlm_gbg_sek} sek")
 
 
+#c
 
+def diet():
+    #läser in behov från Naringsbehov.text och sätter i array
+    needs = []
+    try:
+        with open("Naringsbehov.text", "r") as f:
+            for line in f:
+                if not line.startswith("#") and line.strip():
+                    #när fil ej börjar med # eller space, dela upp koden för varje komma.
+                    try:
+                        values = [float(x) for x in line.split(',') if x.strip()]
+                        needs.extend(values)
+                    except ValueError:
+                        continue
+        needs = np.array(needs)
+    except FileNotFoundError:
+        print("kunde inte hitta fil naringsbehov.text")
+        return
+
+    #Samt livsmedel från nutrients.text, mat, näringsvärde, energi kJ och pris
+    foods = []
+    nutrients = []
+    energy_list = []
+    prices = []
+
+    try:
+        with open("nutrients.text", "r", encoding="utf-8") as f:
+            for line in f:
+                # Hoppa över kommentarer och tomma rader
+                if not line.startswith("#") and line.strip():
+                    #seperera varje space, skippa tomrum
+                    parts = line.split()
+                    if not parts:
+                        continue
+
+                    #tar bort kolon från namnen, gör string, append till lista
+                    food_name = parts[0].replace(":", "")
+                    foods.append(food_name)
+
+                    #alla siffror och värden
+                    values = [float(x) for x in parts[1:]]
+
+                    #sista två värdena är energi och pris
+                    prices.append(values[-1])
+                    energy_list.append(values[-2])
+
+                    #resten fram till energi och pris är näringsvärdena
+                    nutrients.append(values[:-2])
+
+    except FileNotFoundError:
+        print("kunde inte hitta filen nutrients.text")
+        return
+
+    #listor till numpy array
+    c = np.array(prices)
+    nutrients_per_food = np.array(nutrients)
+
+    #A_ub och b_ub för minimikrav, olikheter. minus framför för att få minimumvärden
+    A_ub = -nutrients_per_food.T
+    b_ub = -needs
+
+    #A_eq och b_eq är energi kravet, dvs likheter
+    A_eq = np.array([energy_list])
+    b_eq = np.array([8710])
+
+    #lös med priser samt olikheterr och likheter
+    res = linprog(c, A_ub=A_ub, b_ub=b_ub, A_eq=A_eq, b_eq=b_eq, method='highs')
+
+    if res.success:
+        print(f"Total kostnad för menyn per dag: {res.fun} kr")
+
+        results = []
+        for i in range(len(foods)):
+            #tar bort alla ingredienser i mängd under 1e-10
+            if res.x[i] >= 1e-10:
+                results.append((foods[i], res.x[i]))
+
+        #sortera listan, ingredienser störst till minst
+        results.sort(key=lambda x: x[1], reverse=True)
+
+        print("Optimal ingredienslista:")
+        for name, amount in results:
+            print(f"{name} {amount} hg")
+    else:
+        print("Linprog kunde inte hitta en lösning:", res.message)
+
+# Kör funktionen
+diet()
 
 
 
