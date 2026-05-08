@@ -205,6 +205,30 @@ plt.plot (t, q_steady)
 plt.grid(True)
 plt.show()
 
+77777777777777777777777777777777
+
+
+def taylor(x):
+#7 termer för sinx taylor utveckling grad 13.
+    return sum((-1)**i * x**(2*i+1) / math.factorial(2*i+1) for i in range(7))
+
+#skapar våra axlar
+x = np.linspace(-10, 10, 1000)
+y_sin = np.sin(x)
+y_taylor = taylor(x)
+
+#plotten
+plt.plot(x, y_sin, label="sin(x)")
+plt.plot(x, y_taylor, label="taylor utveckling")
+plt.plot(x, np.abs(y_taylor - y_sin), label="skillnad")
+
+plt.ylim(-2, 2)
+plt.legend()
+plt.title("Taylor och sin jämförelse")
+plt.show()
+
+
+
 999999999999999999999999999999999
 
 
